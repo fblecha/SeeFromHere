@@ -17,49 +17,55 @@ void draw() {
 
   int buildingWidth = 200;
   int buildingLength = 200;
-  //drawBuilding(buildingWidth, buildingLength,  (width/2) - buildingWidth/2, (height/2) - buildingLength/2 ); 
- 
-   
-  drawCamera2(100, 100, 100, 45);
+
+
+  drawBuilding(buildingWidth, buildingLength, (width/2) - buildingWidth/2, (height/2) - buildingLength/2 ); 
+
+
+  float cornerX = ((width/2)-buildingWidth/2);
+  float cornerY = ((height/2)-buildingLength/2);
+  
+  pushMatrix();
+  
+  drawCamera(cornerX, cornerY, 100, 45);
+  popMatrix();
   //drawCamera2(200, 100, 100, 45);
-  
-  
 }
 
 void drawBuilding(int length, int width, float x, float y) {
+
+  color c = color(200);
+  fill(c);
+
   beginShape();
   vertex(x, y);
   vertex(x+width, y);
   vertex(x+width, y+length);
   vertex(x, y+length);
   endShape(CLOSE);
-  
 }
 
-void drawCamera(float x, float y, float fov, float range) {
-  pushMatrix();
-  translate(width*0.2, height*0.5);
-  //rotate(frameCount / 200.0);
-  polygon(0, 0, 80, 3);  // Triangle
-  popMatrix();  
-}
 
-void drawCamera2(float x, float y, float range, float fov) {
- 
+void drawCamera(float x, float y, float range, float fov) {
+
+  color c = color(200, 100, 100);
+  fill(c);
+
   float theta = radians(fov / 2) ;
 
-  float x1 = 0; //-1 * tan(theta) * range ;
+  float x1 = -1 * tan(theta) * range ;
   float y1 = range;
-  
+
   float x2 = tan(theta) * range;
   float y2 = range;
-  
+
   pushMatrix();
   translate(x, y);
+  rotate( frameCount / 200.0 );
   beginShape();
-  vertex(0,0);
-  vertex(x1,y1);
-  vertex(x2,y2);
+  vertex(0, 0);
+  vertex(x1, y1);
+  vertex(x2, y2);
   endShape(CLOSE );
   popMatrix();
 }
@@ -75,13 +81,4 @@ void polygon(float x, float y, float radius, int npoints) {
     vertex(sx, sy);
   }
   endShape(CLOSE);
-}
-
-
-void drawTriangle() {
-  pushMatrix();
-  translate(width*0.2, height*0.5);
-  //rotate(frameCount / 200.0);
-  polygon(0, 0, 82, 3);  // Triangle
-  popMatrix();
 }
